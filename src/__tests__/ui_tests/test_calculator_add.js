@@ -1,32 +1,33 @@
-// add one selenium test
-
-const { Builder, By, Key, until } = require("selenium-webdriver");
+const { Builder, By, until } = require("selenium-webdriver");
 const assert = require("assert");
 
-(async function testCalculatorAdd() {
-  const driver = await new Builder().forBrowser("chrome").build();
-  try {
-    await driver.get("http://localhost:3000"); // Replace with the actual URL of your React app
+describe("Calculator Integration Tests", () => {
+  test("performs addition correctly", async () => {
+    const driver = await new Builder()
+      .forBrowser("chrome")
+      .build();
 
-    await driver
-      .findElement(By.css('input[placeholder="Number 1"]'))
-      .sendKeys("5");
-    await driver.findElement(By.css("select")).sendKeys("+");
-    await driver
-      .findElement(By.css('input[placeholder="Number 2"]'))
-      .sendKeys("7");
-    await driver.findElement(By.xpath('//button[text()="Calculate"]')).click();
+    try {
+      await driver.get("http://localhost:3000/");
 
-    await driver.wait(
-      until.elementLocated(By.xpath('//h2[text()="Result: 12"]')),
-      5000
-    );
-    const resultElement = await driver.findElement(
-      By.xpath('//h2[text()="Result: 12"]')
-    );
-    const resultText = await resultElement.getText();
-    assert.strictEqual(resultText, "Result: 12");
-  } finally {
-    await driver.quit();
-  }
-})();
+      await driver.findElement(By.id('Number1')).sendKeys("5");
+      await driver.findElement(By.id('operatorSelect')).sendKeys("+");
+      await driver.findElement(By.id("Number2")).sendKeys("7");
+      await driver.findElement(By.xpath('//button[text()="Calculate"]')).click();
+
+      await driver.wait(
+        until.elementLocated(By.xpath('//*[@data-testid="result"]')),
+        5000
+      );
+
+      const resultElement = await driver.findElement(
+        By.xpath('//*[@data-testid="result"]')
+      );
+      const resultText = await resultElement.getText();
+
+      assert.strictEqual(resultText, "Result: 12");
+    } finally {
+      await driver.quit();
+    }
+  });
+});
