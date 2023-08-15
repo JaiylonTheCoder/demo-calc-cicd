@@ -9,7 +9,7 @@ describe("Calculator Integration Tests", () => {
       .build();
 
     try {
-      await driver.get("http://localhost:3000/");
+      await driver.get("https://learn-cicd-jaiylon-3f865e11c0ab.herokuapp.com/");//If tests don't pass use "https://localhost/3000/"
 
       await driver
         .findElement(By.id('Number1'))
