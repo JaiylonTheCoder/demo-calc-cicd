@@ -1,7 +1,7 @@
 const { Builder, By, until } = require("selenium-webdriver")
 const assert = require('assert')
 
-// jest.setTimeout(10000)
+jest.setTimeout(10000)
 describe("Calculator Integration Tests", () => {
   test("performs subtraction correctly", async () => {
     const driver = await new Builder()

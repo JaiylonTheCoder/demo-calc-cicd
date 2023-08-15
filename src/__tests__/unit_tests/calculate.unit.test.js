@@ -1,6 +1,5 @@
 // add one jest test
 
-// import { calculate } from "../../helpers";
 import { calculate } from "../../helpers";
 
 test("adds two numbers correctly", () => {
